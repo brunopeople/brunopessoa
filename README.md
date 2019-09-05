@@ -7,7 +7,7 @@ Teste frontend Comunità
 
 # Steps:
 * 1 download do git (caso não tenha);
-* 2 download nodejs (caso não tenha);
+* 2 download nodejs (caso não tenha), instale o VUE CLI (p/ criar o project startup);
 * 3 Cadastre-se e faça clone https://gitlab.com/habitatiz.startup/frontend-canditate
 * 4 crie uma branch com o teu nome a partir da 'master' 
 * 5 ao terminar faça commit, e push
