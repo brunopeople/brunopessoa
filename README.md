@@ -19,7 +19,7 @@ Teste frontend Comunità
 
 Utilizando VUE JS (SPA), VUEX (MVVM), e o serviço https://reqres.in/ (integração de api's), crie uma dashboard com o propósito de cadastro e gestão de usuários.
 
-Sugestão: utilize o vuetify (framework UI para vuejs)
+Sugestão: utilize o vuetify (framework UI para vuejs), tente aplicar o conceito de componentização
 
 API Host: https://reqres.in/api/
 
