@@ -39,6 +39,8 @@ Crie uma dashboard:
 		
 - Logout -> método
 
+*Consulte a documentação do https://reqres.in/ para identificar os endpoint's*
+
 
 
 
