@@ -1,4 +1,3 @@
-
 Teste frontend Comunità
 
 # Será avaliado:
@@ -7,14 +6,14 @@ Teste frontend Comunità
 - Git flow (feature -> merge request)
 
 # Steps:
-1 download do git (caso não tenha);
-2 download nodejs (caso não tenha);
-3 Cadastre-se e faça clone https://gitlab.com/habitatiz.startup/frontend-canditate
-4 crie uma branch com o teu nome a partir da 'master' 
-5 ao terminar faça commit, e push
-6 Crie um 'merge request' da sua branch para 'master'
-7 Faça o deploy do SPA (heroku, github pages)
-8 Documente as apis no postman (https://www.getpostman.com/) e export a collection utilizada no projeto
+* 1 download do git (caso não tenha);
+* 2 download nodejs (caso não tenha);
+* 3 Cadastre-se e faça clone https://gitlab.com/habitatiz.startup/frontend-canditate
+* 4 crie uma branch com o teu nome a partir da 'master' 
+* 5 ao terminar faça commit, e push
+* 6 Crie um 'merge request' da sua branch para 'master'
+* 7 Faça o deploy do SPA (heroku, github pages)
+* 8 Documente as apis no postman (https://www.getpostman.com/) e export a collection utilizada no projeto
 
 # Descrição
 
