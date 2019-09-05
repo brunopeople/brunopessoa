@@ -39,7 +39,7 @@ Crie uma dashboard:
 		
 - Logout -> método
 
-*Consulte a documentação do https://reqres.in/ para identificar os endpoint's*
+*Consulte a documentação do https://reqres.in/ para identificar os endpoint's.*
 *Caso a api esteja indisponível, utilize outro serviço, consulte https://any-api.com/*
 
 
