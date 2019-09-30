@@ -14,6 +14,9 @@
             label="E-mail"
             type="email"
             required
+            :error="$v.user.email.$error"
+            :error-messages="$v.user.email.$error ? 'E-mail inválido' : ''"
+            @blur="$v.user.email.$touch()"
           />
           <v-text-field
             v-model="user.password"
@@ -21,6 +24,9 @@
             label="Password"
             type="password"
             required
+            :error="$v.user.password.$error"
+            :error-messages="$v.user.password.$error ? 'Senha inválida' : ''"
+            @blur="$v.user.password.$touch()"
           />
         </v-form>
       </v-card-text>
@@ -59,6 +65,8 @@
 </template>
 
 <script>
+import { required, minLength, email } from 'vuelidate/lib/validators'
+
 export default {
   name: 'theLogin',
   data() {
@@ -71,6 +79,18 @@ export default {
       registerMode: false,
     }
   },
+  validations: {
+    user: {
+      email: {
+        required,
+        email,
+      },
+      password: {
+        required,
+        minLength: minLength(3),
+      },
+    },
+  },
   methods: {
     registerUser() {
       this.sendingRequest = true
@@ -80,6 +100,8 @@ export default {
       })
     },
     userLogin() {
+      this.$v.$touch()
+      if (this.$v.$error) return
       this.sendingRequest = true
       this.$http
         .post('login', this.user)

@@ -29,18 +29,41 @@
               </v-card-title>
               <v-card-text>
                 <v-container>
-                  <v-text-field v-model="editedUser.first_name" label="Nome" />
+                  <v-text-field
+                    v-model="editedUser.first_name"
+                    label="Nome"
+                    :error-messages="
+                      $v.editedUser.first_name.$error ? 'Nome requerido' : ''
+                    "
+                    :error="$v.editedUser.first_name.$error"
+                    @blur="$v.editedUser.first_name.$touch()"
+                  />
                   <v-text-field
                     v-model="editedUser.last_name"
                     label="Sobrenome"
+                    :error-messages="
+                      $v.editedUser.last_name.$error
+                        ? 'Sobrenome requerido'
+                        : ''
+                    "
+                    :error="$v.editedUser.last_name.$error"
+                    @blur="$v.editedUser.last_name.$touch()"
                   />
-                  <v-text-field v-model="editedUser.email" label="E-mail" />
+                  <v-text-field
+                    v-model="editedUser.email"
+                    label="E-mail"
+                    :error-messages="
+                      $v.editedUser.email.$error ? 'E-mail inválido' : ''
+                    "
+                    :error="$v.editedUser.email.$error"
+                    @blur="$v.editedUser.email.$touch()"
+                  />
                 </v-container>
               </v-card-text>
               <v-card-actions>
                 <div class="flex-grow-1" />
                 <v-btn
-                  color="gray darken-1"
+                  color="warning darken-1"
                   text
                   :disabled="requestingApi"
                   @click="cancelEdit"
@@ -49,7 +72,7 @@
                 </v-btn>
                 <v-btn
                   v-if="editMode"
-                  color="blue darken-1"
+                  color="success darken-1"
                   text
                   :disabled="requestingApi"
                   @click="editUser"
@@ -58,7 +81,7 @@
                 </v-btn>
                 <v-btn
                   v-else
-                  color="blue darken-1"
+                  color="success darken-1"
                   text
                   :disabled="requestingApi"
                   @click="saveUser"
@@ -87,7 +110,7 @@
         <v-card-actions>
           <div class="flex-grow-1"></div>
           <v-btn
-            color="blue darken-1"
+            color="success darken-1"
             text
             :disabled="requestingApi"
             @click="deleteDialog = false"
@@ -96,7 +119,7 @@
           </v-btn>
 
           <v-btn
-            color="red darken-1"
+            color="warning darken-1"
             text
             :disabled="requestingApi"
             @click="deleteUser()"
@@ -110,6 +133,8 @@
 </template>
 
 <script>
+import { required, email } from 'vuelidate/lib/validators'
+
 export default {
   name: 'userList',
   data() {
@@ -130,6 +155,13 @@ export default {
       deleteDialog: false,
     }
   },
+  validations: {
+    editedUser: {
+      first_name: { required },
+      last_name: { required },
+      email: { required, email },
+    },
+  },
   computed: {
     dialogTitle() {
       return this.editedIndex === -1 ? 'Novo usuário' : 'Editar usuário'
@@ -147,6 +179,7 @@ export default {
         .finally(() => (this.requestingApi = false))
     },
     saveUser() {
+      if (this.touchValidations()) return
       this.requestingApi = true
       this.$http
         .post('users', this.editedUser)
@@ -164,6 +197,7 @@ export default {
       this.dialog = true
     },
     editUser() {
+      if (this.touchValidations()) return
       this.requestingApi = true
       this.$http
         .put(`users/${this.editUser.id}`, this.editedUser)
@@ -180,6 +214,7 @@ export default {
     cancelEdit() {
       this.dialog = false
       this.editMode = false
+      this.$v.$reset()
     },
     resetEditUser() {
       this.editedIndex = -1
@@ -190,6 +225,10 @@ export default {
       this.requestingApi = false
       this.dialog = false
       this.deleteDialog = false
+    },
+    touchValidations() {
+      this.$v.$touch()
+      return this.$v.$error
     },
   },
 }
