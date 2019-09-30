@@ -184,6 +184,7 @@ export default {
     resetEditUser() {
       this.editedIndex = -1
       this.editedUser = {}
+      this.editMode = false
     },
     endRequests() {
       this.requestingApi = false
