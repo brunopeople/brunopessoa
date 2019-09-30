@@ -35,8 +35,7 @@ export default {
   },
   methods: {
     userLogout() {
-      this.$router.push({ name: 'home' })
-      localStorage.removeItem('_token')
+      this.$store.dispatch('userLogout')
     },
   },
 }

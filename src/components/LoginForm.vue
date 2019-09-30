@@ -103,14 +103,7 @@ export default {
       this.$v.$touch()
       if (this.$v.$error) return
       this.sendingRequest = true
-      this.$http
-        .post('login', this.user)
-        .then(res =>
-          localStorage.setItem('_token', JSON.stringify(res.data.token))
-        )
-        .then(() => this.$router.push('users'))
-        .catch(err => err)
-        .finally(() => (this.sendingRequest = false))
+      this.$store.dispatch('userLogin', this.user)
     },
   },
 }

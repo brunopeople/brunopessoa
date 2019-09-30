@@ -4,7 +4,6 @@
       :headers="headers"
       :items="users"
       class="elevation-1"
-      :loading="requestingApi"
       loading-text="Loading..."
       hide-default-footer
     >
@@ -62,30 +61,18 @@
               </v-card-text>
               <v-card-actions>
                 <div class="flex-grow-1" />
-                <v-btn
-                  color="warning darken-1"
-                  text
-                  :disabled="requestingApi"
-                  @click="cancelEdit"
-                >
+                <v-btn color="warning darken-1" text @click="cancelEdit">
                   Cancelar
                 </v-btn>
                 <v-btn
                   v-if="editMode"
                   color="success darken-1"
                   text
-                  :disabled="requestingApi"
                   @click="editUser"
                 >
                   Editar
                 </v-btn>
-                <v-btn
-                  v-else
-                  color="success darken-1"
-                  text
-                  :disabled="requestingApi"
-                  @click="saveUser"
-                >
+                <v-btn v-else color="success darken-1" text @click="saveUser">
                   Salvar
                 </v-btn>
               </v-card-actions>
@@ -109,21 +96,11 @@
         >
         <v-card-actions>
           <div class="flex-grow-1"></div>
-          <v-btn
-            color="success darken-1"
-            text
-            :disabled="requestingApi"
-            @click="deleteDialog = false"
-          >
+          <v-btn color="success darken-1" text @click="deleteDialog = false">
             Cancelar
           </v-btn>
 
-          <v-btn
-            color="warning darken-1"
-            text
-            :disabled="requestingApi"
-            @click="deleteUser()"
-          >
+          <v-btn color="warning darken-1" text @click="deleteUser()">
             Excluir
           </v-btn>
         </v-card-actions>
@@ -133,13 +110,13 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import { required, email } from 'vuelidate/lib/validators'
 
 export default {
   name: 'userList',
   data() {
     return {
-      requestingApi: false,
       headers: [
         { text: 'ID', value: 'id' },
         { text: 'E-mail', value: 'email' },
@@ -147,7 +124,6 @@ export default {
         { text: 'Sobrenome', value: 'last_name' },
         { text: 'Ações', value: 'action', sortable: false },
       ],
-      users: [],
       editedIndex: -1,
       editedUser: {},
       editMode: false,
@@ -166,25 +142,21 @@ export default {
     dialogTitle() {
       return this.editedIndex === -1 ? 'Novo usuário' : 'Editar usuário'
     },
+    ...mapGetters(['users']),
   },
   created() {
     this.getUsers()
   },
   methods: {
     getUsers() {
-      this.requestingApi = true
-      this.$http
-        .get('users')
-        .then(res => (this.users = res.data.data))
-        .finally(() => (this.requestingApi = false))
+      this.$store.dispatch('getUsers')
     },
     saveUser() {
       if (this.touchValidations()) return
-      this.requestingApi = true
-      this.$http
-        .post('users', this.editedUser)
-        .then(res => this.users.push(res.data))
-        .finally(() => this.endRequests())
+
+      this.$store
+        .dispatch('createUser', this.editedUser)
+        .finally(() => this.closeDialogs())
     },
     loadUser(user, action = 'edit') {
       this.editMode = true
@@ -198,18 +170,18 @@ export default {
     },
     editUser() {
       if (this.touchValidations()) return
-      this.requestingApi = true
-      this.$http
-        .put(`users/${this.editUser.id}`, this.editedUser)
-        .then(res => Object.assign(this.users[this.editedIndex], res.data))
-        .finally(() => this.endRequests())
+
+      this.$store
+        .dispatch('editUser', {
+          user: this.editedUser,
+          index: this.editedIndex,
+        })
+        .finally(() => this.closeDialogs())
     },
     deleteUser() {
-      this.requestingApi = true
-      this.$http
-        .delete(`users/${this.editedUser.id}`)
-        .then(() => this.users.splice(this.editedIndex, 1))
-        .finally(() => this.endRequests())
+      this.$store
+        .dispatch('deleteUser', this.editedIndex)
+        .finally(() => this.closeDialogs())
     },
     cancelEdit() {
       this.dialog = false
@@ -221,8 +193,7 @@ export default {
       this.editedUser = {}
       this.editMode = false
     },
-    endRequests() {
-      this.requestingApi = false
+    closeDialogs() {
       this.dialog = false
       this.deleteDialog = false
     },
