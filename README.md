@@ -1,29 +1,5 @@
-# frontend-canditate
+# Victor Santiago
 
-## Project setup
-```
-npm install
-```
+## Getting started
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Run your tests
-```
-npm run test
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+Clone the repo, install all project's dependencies with `npm install`, and run `npm run serve`. When it's done building, the app is accessible from http://localhost:8080/.
