@@ -10,7 +10,6 @@
     >
       <template v-slot:top>
         <v-toolbar flat color="white">
-          <v-toolbar-title>Usuários</v-toolbar-title>
           <div class="flex-grow-1" />
           <v-dialog v-model="dialog" max-width="500px" persistent>
             <template v-slot:activator="{ on }">
