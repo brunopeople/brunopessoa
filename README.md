@@ -11,7 +11,7 @@ Teste frontend Comunità
 * 3 Cadastre-se e faça clone https://gitlab.com/habitatiz.startup/frontend-canditate
 * 4 crie uma branch com o teu nome a partir da 'master' 
 * 5 ao terminar faça commit, e push
-* 6 Crie um 'merge request' da sua branch para 'master'
+* 6 Crie um 'merge request' da sua branch para 'dev'
 * 7 Faça o deploy do SPA (heroku, github pages)
 * 8 Documente as apis no postman (https://www.getpostman.com/) e export a collection utilizada no projeto
 
